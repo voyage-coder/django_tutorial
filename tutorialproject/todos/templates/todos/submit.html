@@ -1,0 +1,10 @@
+<form method="POST" action="{% url 'post_example' %}">
+    <!-- action is the endpoint where we are posting to -->
+    <!-- we can target a certain url by name -->
+     {% csrf_token %}
+     <input type="text" name="name" placeholder="Name">
+     <input type="text" name="age" placeholder="Age">
+     <input type="text" name="job" placeholder="Job">
+     <!-- these name="" must match the endpoint names like name, age, job -->
+    <button type="submit">Send POST</button>
+</form>

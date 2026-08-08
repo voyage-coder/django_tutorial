@@ -1,0 +1,99 @@
+Normally we create venv and then install django using pip
+Then we need to amnage venv and package separately 
+So we use uv which is tool that manages python/django project's env and dependencies/packages
+
+# powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+this installs uv
+
+# set Path=C:\Users\koppi\.local\bin;%Path%
+go to this path and verify uv version
+no need to do this always jst do once
+
+# uv --version
+gets uv version
+
+# uv init
+this cmd initializes py project and created .toml file which has configuration of our project like name, version etc
+
+# uv add django
+this adds django as dependency to the project and also in .toml file
+
+# uv run python
+# uv run django-admin
+here uv run means run this cmd i.e python/django-admin using the project's managed python env
+
+# uv run django-admin startproject core tutorialproject
+django-admin is a cmd line tool provided by django
+this lets u perform, django operations
+django-admin startproject - means create a new django project
+django-admin startapp - means create a django application
+if we run the that cmd tutorialproject folder is created with core and manage.py
+core is the name of django configuration package
+tutorialproject is the dir where django should create the project
+if instead of tutorialproject if there is '.' then current dir is the dir where django project should be created
+manage.py is the cmd line interface for ur specific django project
+we use this do db migrations or run the server or cmds in the shell etc
+
+the important file sin core/ are settings and urls
+urls contains url mappings
+settings contains secret keys db keys apllications etc
+
+we keep core and our app seperate
+# cd tutorialproject - in codecraft we did this as server
+# uv run django-admin startapp todos
+we are running application inside this so we do startapp
+we get some file sinside todos
+
+todos/views - create a views
+todos/urls - add path that points to it's views
+core/urls - add path '' and also add include in imports 
+core/settings - we created todos app but not yet registered it, so we register it here
+to test if app is success or not run it with 
+# python manage.py runserver
+if using uv
+# uv run manage.py runserver
+now this is hosting development server on port 8000
+we see page not found if we open that port
+bcz we dont have nay view that is pointing at just /
+if we want to see our hello_world view we need to go to 8000/hello
+create a hello_python view in / that means path is ''
+now we see hello python in '/'
+
+we create another view to how to render html document as hello_html_view
+and fort his we create todos/templates/todos/hello.html
+we keep the same name as app in todos and write todos/hello.html in view and not templates 
+django can identify this bcz of same application name
+add some text in html and add a path to it in todos/urls
+after passing request in render then we get hello html in that path
+
+we now create a view where we pass argument in url and it returns it like
+if we do 8000/helloname/mike it gives hello mike
+
+another way to submit info to endpoints is by using query parameters
+that means we dont pass arguments in url but get info from url
+if mysite.com/search?q=gfhsbgshbfwhjfn
+we get gfhsbgshbfwhjfn from url
+
+we not only can return stuff but also can redirect using name in path
+so for that we create a special_view
+we redirect this to hello_html so when we do /special we see hello html
+
+ALL THESE TILL NOW WERE GET REQUESTS
+NO WE DO POST REQUESTS
+
+we create post example view which accepts only post requests and not get so we add if condition
+if not post it return http not allowed with status code 405 and specifying that only post reqs allowed
+after path adding if we go to /postendpoint we see 405 error
+bcz urls by default take get reqs so we use postman or swagger in fastapi
+so we create a submit view which renders submit.html form where we can submit 
+that view renders the form data
+add this view to urls as submitendpoint
+now we open this and see form and when we submit form we get 403 forbidden erroe bcz
+we didn't include a csrf (cross-side request forgery) token in our form- this is a security vulnerability
+after adding csrf_token in form we get redirected to postendpoint and see our submitted  name, age, job
+here now we are specifying the input fields manually, in views we parse and validate them manually - this is one way of working with forms in django
+more convinient way is to use forms or forms classes
+
+create todos/forms.py this is not mandatory jst a best practice
+create a person model class of form and specify the fields with parsing and validation there
+then in views import PersonForm from forms

@@ -1,0 +1,8 @@
+<form method="POST" action="{% url 'post_django_form' %}">
+    <!-- action is the endpoint where we are posting to -->
+    <!-- we can target a certain url by name -->
+     {% csrf_token %}
+     {{ form.as_p }} 
+     <!-- this takes the form and render into html doc -->
+    <button type="submit">Send POST</button>
+</form>
