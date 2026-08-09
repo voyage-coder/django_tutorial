@@ -1,0 +1,26 @@
+{% extends 'todos/base.html' %}
+
+{% block title %}Templating{% endblock %}
+
+
+{% block content %}
+<h1>{{name}}</h1>
+<h1>{{age}}</h1>
+<h1>{{skills}}</h1>
+
+<!-- for list of skills -->
+
+<ul>
+    <!-- to create iteration over every skill -->
+    {% for skill in skills %}
+    <li>{{skill}}</li>
+    {% endfor %}
+</ul>
+
+<!-- if want to display this para only when i have more than three skills -->
+{% if skills|length > 3 %}
+    <p>{{name}} has a lot of skills</p>
+{% elif 'Django' in skills %}
+    <p>{{name}} knows Django! That is awesome!</p>
+{% endif %}
+{% endblock %}

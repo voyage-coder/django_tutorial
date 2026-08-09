@@ -84,3 +84,12 @@ def submit_django_form(request):
     form = PersonForm
     return render(request, 'todos/submit_django_form.html', {'form': form})
 # we are passing a from dict here
+
+# to pass smtg to the html doc we are rendering
+def template_view(request):
+    context = {
+        "name": "Navya",
+        "age" : 18,
+        "skills": ["Python", "Docker", "Django"]
+    }
+    return render(request, 'todos/template_demo.html', context)
