@@ -97,3 +97,11 @@ more convinient way is to use forms or forms classes
 create todos/forms.py this is not mandatory jst a best practice
 create a person model class of form and specify the fields with parsing and validation there
 then in views import PersonForm from forms
+then we create a view as post_django_form we use PersonForm model and do data validation
+we create another submit_django_form and add form.as_p which converts incoming form data into paragraphs
+
+we create a view to pass smtg to html doc we are rendering
+add its path and then go to /templating u see name, age, skills
+
+we create a base.html template in templates/todos/
+we learnt there how to extend html format from a base format to all other
