@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseNotAllowed
 
-from .forms import PersonForm
+from .forms import PersonForm, TodoForm
+from .models import Todo
 
 # Create your views here.
 # like creating routes here
@@ -93,3 +94,29 @@ def template_view(request):
         "skills": ["Python", "Docker", "Django"]
     }
     return render(request, 'todos/template_demo.html', context)
+
+# view for todos
+def todos_view(request):
+    if request.method == 'POST':
+        # pass
+        form = TodoForm(request.POST)
+        if form.is_valid():
+            # now we create db obj
+            todo = form.save()
+            # this automatically creates a todo instance based on todo form and
+            # since this form is a model form, it saves into db 
+            return HttpResponse('Todo successfully created')
+    else:
+        form = TodoForm()
+        todos = Todo.objects.all()
+        # this means select all rows in the todos table in db and get it in py format
+        return render(
+            request,
+            'todos/todos.html',
+            {
+                'form': form,
+                'todos': todos
+            }
+        )
+
+    

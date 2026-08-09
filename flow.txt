@@ -105,3 +105,33 @@ add its path and then go to /templating u see name, age, skills
 
 we create a base.html template in templates/todos/
 we learnt there how to extend html format from a base format to all other
+
+DATABASE MIGRATIONS 
+in python we have python objs, in db we have tables, selcct, insert, alteer etc statements
+these are two different things, to connect them together we have ORM(Object relattinal mappers)
+we need to map python objs to db entries
+one way of mapping is that using a package like SQLAlchemy
+but in django we can jst use Django ORM whcih is by default provided by django.db models
+we can see this import in todos/models.py
+in core/settings we have a DATABASES = which by default connects to a db file called db.sqlite3
+we can tables to this db without ever writing actual sql code
+we can create a python class as models that maps with rows of db tables specifying their constraints and datatypes
+now we create a Todo model in models.py
+then Priority enum created
+we create a todos view for todos form
+and for that we need todos.html and TodoForm in forms.py
+we add path in urls for this view
+we cant expect this to work immediately
+for that we need to migration
+we need to do this in tutorialproject
+# python manage.py makemigrations
+if using uv then
+# uv run manage.py makemigrations
+we get file in todos/migrations
+this is jst to generate a migration it do not actually create table - needed for checking
+# uv run manage.py migrate
+then we can see some tables like auth admin etc which are part of django default
+todos table is created 
+now run the server
+
+
